@@ -1,8 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Theme, useTheme } from "../theme";
 
-const PlaceholderImage = require('@/assets/images/background-image.png');
-
 export default function Index() {
   const { theme } = useTheme();
   const styles = createStyles(theme);
