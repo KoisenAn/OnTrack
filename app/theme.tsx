@@ -44,7 +44,7 @@ export const minimalLight = {
     background: "#ffffff",
     surface: "#f8fafc",
     primary: "#000000",
-    secondary: "#9CA3AF",
+    secondary: "#b3b3b3",
     muted: "#6B7280",
     border: "#E5E7EB",
     slider: "#EEEEEE",
