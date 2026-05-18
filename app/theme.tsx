@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, type PropsWithChildren } from "react";
+import { fonts, fontSizes, useAppFonts } from "./fonts";
 
 export const light = {
   colors: {
@@ -12,19 +13,8 @@ export const light = {
     text: "#111827",
     tabBarBackground: "#ffffff",
   },
-  fonts: {
-    body: "System",
-    heading: "System",
-    mono: "System",
-  },
-  fontSizes: {
-    xs: 12,
-    sm: 14,
-    md: 16,
-    lg: 20,
-    xl: 24,
-    xxl: 32,
-  },
+  fonts,
+  fontSizes,
   spacing: {
     xs: 4,
     sm: 8,
@@ -106,7 +96,13 @@ const ThemeContext = createContext<ThemeContextValue>({
 });
 
 export function ThemeProvider({ children }: PropsWithChildren) {
+  const fontsLoaded = useAppFonts();
   const [theme, setTheme] = useState<Theme>(minimalLight);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
 }
 
