@@ -9,7 +9,6 @@ export default function Settings() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerRow}>Settings</View>
       <View style={styles.center}>
         <Feather name="settings" size={54} color={theme.colors.secondary
         } />

@@ -89,7 +89,7 @@ const ThemeContext = createContext<ThemeContextValue>({
 
 export function ThemeProvider({ children }: PropsWithChildren) {
   const fontsLoaded = useAppFonts();
-  const [theme, setTheme] = useState<Theme>(light);
+  const [theme, setTheme] = useState<Theme>(minimalLight);
 
   if (!fontsLoaded) {
     return null;

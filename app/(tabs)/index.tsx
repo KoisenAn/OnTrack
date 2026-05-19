@@ -2,6 +2,7 @@ import Feather from "@expo/vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { useLayoutEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import AddTrackerModal, { type NewTracker } from "../components/AddTrackerModal";
 import TrackerCard, { type TrackerData } from "../components/TrackerCard";
 import { fontSizes } from "../fonts";
 import { Theme, useTheme } from "../theme";
@@ -10,6 +11,7 @@ export default function Index() {
   const { theme } = useTheme();
   const styles = createStyles(theme);
   const [trackers, setTrackers] = useState<TrackerData[]>([]);
+  const [adding, setAdding] = useState(false);
   const navigation: any = useNavigation();
 
   const nextTrackerTitle = useMemo(
@@ -28,19 +30,39 @@ export default function Index() {
     ]);
   };
 
+  const openAddModal = () => setAdding(true);
+
+  const handleCreateFromModal = (data: NewTracker) => {
+    setTrackers((current) => [
+      ...current,
+      {
+        id: `${Date.now()}`,
+        title: data.title,
+        subtitle: `${data.type}${data.notes ? ` — ${data.notes}` : ""}`,
+      },
+    ]);
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Pressable onPress={handleAddTracker} style={{ paddingHorizontal: 20 }}>
-          <Feather name="plus" size={24} color={theme.colors.secondary} />
+        <Pressable onPress={openAddModal} style={{ paddingHorizontal: 12 }}>
+          <Feather name="plus" size={18} color={theme.colors.secondary} />
         </Pressable>
       ),
     });
-  }, [navigation, handleAddTracker, theme.colors.secondary]);
+  }, [navigation, openAddModal, theme.colors.secondary]);
 
   return (
     <View style={styles.container}>
-
+      <AddTrackerModal
+        visible={adding}
+        onClose={() => setAdding(false)}
+        onCreate={(data) => {
+          handleCreateFromModal(data);
+          setAdding(false);
+        }}
+      />
       <ScrollView contentContainerStyle={styles.content}>
         {trackers.length === 0 ? (
           <Text style={styles.emptyText}>Tap + to add a tracker.</Text>
