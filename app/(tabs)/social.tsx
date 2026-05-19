@@ -2,7 +2,7 @@ import Feather from '@expo/vector-icons/Feather';
 import { StyleSheet, Text, View } from 'react-native';
 import { Theme, useTheme } from "../theme";
 
-export default function Stats() {
+export default function Social() {
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
@@ -12,8 +12,8 @@ export default function Stats() {
       </View>
 
       <View style={styles.center}>
-        <Feather name="pie-chart" size={54} color={theme.colors.secondary} />
-        <Text style={styles.subtitle}>Stats screen.</Text>
+        <Feather name="users" size={54} color={theme.colors.secondary} />
+        <Text style={styles.subtitle}>Social screen.</Text>
       </View>
     </View>
   );

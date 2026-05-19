@@ -1,49 +1,48 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import Feather from '@expo/vector-icons/Feather';
 import { Tabs } from "expo-router";
 import AnimatedTabBar from "../components/AnimatedTabBar";
 import { useTheme } from "../theme";
 
 export default function TabsLayout() {
   const { theme } = useTheme();
+  const iconSize = 20;
 
   return (
     <Tabs
       tabBar={(props) => <AnimatedTabBar {...props} />}
       screenOptions={{
         tabBarActiveTintColor: theme.colors.primary,
-        headerStyle: { backgroundColor: theme.colors.background },
-        headerTitleAlign: "center",
+        headerStyle: { height: 100, backgroundColor: theme.colors.background},
         headerShadowVisible: false,
-        headerTitleStyle: { color: theme.colors.text },
+        headerTitleStyle: { color: theme.colors.text, fontSize: 36, fontWeight: "800", paddingLeft: 4},
+        headerTitleAlign: "left",
         headerTintColor: theme.colors.primary,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          headerTitle: "Home",
+          headerTitle: "Dashboard",
           tabBarIcon: ({ focused, color }) => (
-            <FontAwesome5 name="list-ul" size={24} color={color} />
+            <Feather name="list" size={iconSize} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="stats"
         options={{
-          headerTitle: "Stats",
+          headerTitle: "Analytics",
           tabBarIcon: ({ focused, color }) => (
-            <FontAwesome name="area-chart" size={24} color={color} />
+            <Feather name="pie-chart" size={iconSize} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="sharing"
+        name="social"
         options={{
-          headerTitle: "Sharing",
+          headerTitle: "Social",
           tabBarIcon: ({ focused, color }) => (
-            <FontAwesome6 name="users" size={24} color={color} />
+            <Feather name="users" size={iconSize} color={color} />
           ),
         }}
       />
@@ -52,7 +51,7 @@ export default function TabsLayout() {
         options={{
           headerTitle: "Settings",
           tabBarIcon: ({ focused, color }) => (
-            <FontAwesome5 name="cog" size={24} color={color} />
+            <Feather name="settings" size={iconSize} color={color} />
           ),
         }}
       />

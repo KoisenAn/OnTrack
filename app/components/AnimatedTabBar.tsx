@@ -1,6 +1,6 @@
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useEffect, useRef } from 'react';
-import { Animated, Dimensions, Pressable, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTheme } from '../theme';
 
 const TAB_COUNT = 4;
@@ -53,6 +53,9 @@ export default function AnimatedTabBar({ state, descriptors, navigation }: Botto
             if (!isFocused && !event.defaultPrevented) navigation.navigate(route.name);
           };
 
+          const label =
+            options.headerTitle ?? options.title ?? options.tabBarLabel ?? route.name;
+
           return (
             <Pressable
               key={route.key}
@@ -61,7 +64,12 @@ export default function AnimatedTabBar({ state, descriptors, navigation }: Botto
               accessibilityRole="button"
               accessibilityState={isFocused ? { selected: true } : { selected: false }}
             >
-              {options.tabBarIcon?.({ focused: isFocused, color, size: 26 })}
+              <View style={styles.iconWrap}>
+                {options.tabBarIcon?.({ focused: isFocused, color, size: 26 })}
+                <Text style={[styles.label, { color }]} numberOfLines={1}>
+                  {label}
+                </Text>
+              </View>
             </Pressable>
           );
         })}
@@ -98,12 +106,20 @@ const styles = StyleSheet.create({
     top: BAR_PADDING,
     bottom: BAR_PADDING,
     left: BAR_PADDING,
-    borderRadius: 22,
+    borderRadius: 30,
   },
   tab: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 10,
+    paddingVertical: 6,
     zIndex: 1,
+  },
+  iconWrap: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  label: {
+    marginTop: 1,
+    fontSize: 11,
   },
 });

@@ -1,19 +1,19 @@
 import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from "react-native";
 import { Theme, useTheme } from "../theme";
 
-export type ModuleData = {
+export type TrackerData = {
   id: string;
   title: string;
   subtitle?: string;
 };
 
-type ModuleCardProps = {
-  module: ModuleData;
+type TrackerCardProps = {
+  tracker: TrackerData;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
 };
 
-export default function ModuleCard({ module, onPress, style }: ModuleCardProps) {
+export default function TrackerCard({ tracker, onPress, style }: TrackerCardProps) {
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
@@ -23,9 +23,9 @@ export default function ModuleCard({ module, onPress, style }: ModuleCardProps) 
       style={({ pressed }) => [styles.card, pressed && styles.pressed, style]}
     >
       <View style={styles.header}>
-        <Text style={styles.title}>{module.title}</Text>
+        <Text style={styles.title}>{tracker.title}</Text>
       </View>
-      {module.subtitle ? <Text style={styles.subtitle}>{module.subtitle}</Text> : null}
+      {tracker.subtitle ? <Text style={styles.subtitle}>{tracker.subtitle}</Text> : null}
     </Pressable>
   );
 }
