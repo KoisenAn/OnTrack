@@ -1,5 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import { StyleSheet, Text, View } from 'react-native';
+import { fontSizes } from '../fonts';
 import { Theme, useTheme } from "../theme";
 
 export default function Social() {
@@ -36,7 +37,7 @@ const createStyles = (theme: Theme) =>
     },
     subtitle: {
       marginTop: 12,
-      color: theme.colors.muted,
-      fontSize: 16,
+      color: theme.colors.secondary,
+      fontSize: fontSizes.body,
     },
   });

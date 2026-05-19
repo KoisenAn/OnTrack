@@ -1,5 +1,6 @@
 import Feather from '@expo/vector-icons/Feather';
 import { StyleSheet, Text, View } from 'react-native';
+import { fontSizes } from '../fonts';
 import { Theme, useTheme } from "../theme";
 
 export default function Settings() {
@@ -8,11 +9,10 @@ export default function Settings() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerRow}>
-      </View>
-
+      <View style={styles.headerRow}>Settings</View>
       <View style={styles.center}>
-        <Feather name="settings" size={54} color={theme.colors.secondary} />
+        <Feather name="settings" size={54} color={theme.colors.secondary
+        } />
         <Text style={styles.subtitle}>Settings screen.</Text>
       </View>
     </View>
@@ -36,7 +36,7 @@ const createStyles = (theme: Theme) =>
     },
     subtitle: {
       marginTop: 12,
-      color: theme.colors.muted,
-      fontSize: 16,
+      color: theme.colors.secondary,
+      fontSize: fontSizes.body,
     },
   });

@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useLayoutEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import TrackerCard, { type TrackerData } from "../components/TrackerCard";
+import { fontSizes } from "../fonts";
 import { Theme, useTheme } from "../theme";
 
 export default function Index() {
@@ -65,7 +66,7 @@ const createStyles = (theme: Theme) => StyleSheet.create({
   },
   pageTitle: {
     color: theme.colors.text,
-    fontSize: 28,
+    fontSize: fontSizes.pageTitle,
     fontWeight: "800",
   },
   addButton: {
@@ -83,6 +84,6 @@ const createStyles = (theme: Theme) => StyleSheet.create({
   },
   emptyText: {
     color: theme.colors.muted,
-    fontSize: 16,
+    fontSize: fontSizes.subtitle,
   },
 });

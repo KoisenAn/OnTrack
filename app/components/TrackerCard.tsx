@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from "react-native";
+import { fontSizes } from "../fonts";
 import { Theme, useTheme } from "../theme";
 
 export type TrackerData = {
@@ -48,12 +49,12 @@ const createStyles = (theme: Theme) =>
     },
     title: {
       color: theme.colors.text,
-      fontSize: 18,
+      fontSize: fontSizes.title,
       fontWeight: "700",
     },
     subtitle: {
       color: theme.colors.muted,
-      fontSize: 14,
+      fontSize: fontSizes.subtitle,
       lineHeight: 20,
     },
   });

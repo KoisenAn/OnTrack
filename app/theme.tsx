@@ -1,20 +1,18 @@
 import { createContext, useContext, useState, type PropsWithChildren } from "react";
-import { fonts, fontSizes, useAppFonts } from "./fonts";
+import { useAppFonts } from "./fonts";
 
 export const light = {
   colors: {
     background: "#ffffff",
     surface: "#f8fafc",
     primary: "#007AFF",
-    secondary: "#9CA3AF",
+    secondary: "#000000",
     muted: "#6B7280",
     border: "#E5E7EB",
     slider: "#EEEEEE",
     text: "#111827",
     tabBarBackground: "#ffffff",
   },
-  fonts,
-  fontSizes,
   spacing: {
     xs: 4,
     sm: 8,
@@ -41,8 +39,6 @@ export const minimalLight = {
     text: "#000000",
     tabBarBackground: "#ffffff",
   },
-  fonts: light.fonts,
-  fontSizes: light.fontSizes,
   spacing: light.spacing,
   radii: light.radii,
 };
@@ -59,8 +55,6 @@ export const dark = {
     text: "#F8FAFC",
     tabBarBackground: "#111827",
   },
-  fonts: light.fonts,
-  fontSizes: light.fontSizes,
   spacing: light.spacing,
   radii: light.radii,
 };
@@ -77,8 +71,6 @@ export const minimalDark = {
     text: "#ffffff",
     tabBarBackground: "#616161",
   },
-  fonts: light.fonts,
-  fontSizes: light.fontSizes,
   spacing: light.spacing,
   radii: light.radii,
 };
@@ -97,7 +89,7 @@ const ThemeContext = createContext<ThemeContextValue>({
 
 export function ThemeProvider({ children }: PropsWithChildren) {
   const fontsLoaded = useAppFonts();
-  const [theme, setTheme] = useState<Theme>(minimalLight);
+  const [theme, setTheme] = useState<Theme>(light);
 
   if (!fontsLoaded) {
     return null;
