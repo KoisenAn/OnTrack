@@ -1,5 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { Animated, Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+    Animated,
+    Modal,
+    PanResponder,
+    Pressable,
+    StyleSheet,
+    Text,
+    TextInput,
+    View,
+} from "react-native";
+import { fontSizes } from "../fonts";
 import { Theme, useTheme } from "../theme";
 
 export type NewTracker = {
@@ -30,39 +40,92 @@ export default function AddTrackerModal({ visible, onClose, onCreate }: Props) {
   const [type, setType] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [notes, setNotes] = useState("");
-  
+  const [isMounted, setIsMounted] = useState(false);
+
   const backdropOpacity = useRef(new Animated.Value(0)).current;
-  const slideY = useRef(new Animated.Value(500)).current;
+  const slideY = useRef(new Animated.Value(800)).current;
+  const panY = useRef(new Animated.Value(0)).current;
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_, gestureState) =>
+        Math.abs(gestureState.dy) > 8 && Math.abs(gestureState.dy) > Math.abs(gestureState.dx),
+      onPanResponderGrant: () => {
+        panY.setValue(0);
+      },
+      onPanResponderMove: (_, gestureState) => {
+        if (gestureState.dy > 0) {
+          panY.setValue(gestureState.dy);
+        }
+      },
+      onPanResponderRelease: (_, gestureState) => {
+        const shouldClose = gestureState.dy > 100 || gestureState.vy > 0.8;
+        if (shouldClose) {
+          Animated.timing(slideY, {
+            toValue: 800,
+            duration: 180,
+            useNativeDriver: true,
+          }).start(() => {
+            panY.setValue(0);
+            reset();
+            onClose();
+          });
+        } else {
+          Animated.spring(panY, {
+            toValue: 0,
+            tension: 50,
+            friction: 10,
+            useNativeDriver: true,
+          }).start();
+        }
+      },
+      onPanResponderTerminate: () => {
+        Animated.spring(panY, {
+          toValue: 0,
+          tension: 50,
+          friction: 10,
+          useNativeDriver: true,
+        }).start();
+      },
+    })
+  ).current;
 
   useEffect(() => {
     if (visible) {
+      setIsMounted(true);
+      backdropOpacity.setValue(0);
+      panY.setValue(0);
+      slideY.setValue(800);
+
       Animated.parallel([
         Animated.timing(backdropOpacity, {
           toValue: 1,
-          duration: 300,
-          useNativeDriver: false,
+          duration: 150,
+          useNativeDriver: true,
         }),
         Animated.timing(slideY, {
           toValue: 0,
-          duration: 300,
+          duration: 250,
           useNativeDriver: true,
         }),
       ]).start();
-    } else {
+    } else if (isMounted) {
       Animated.parallel([
+        Animated.timing(slideY, {
+          toValue: 800,
+          duration: 200,
+          useNativeDriver: true,
+        }),
         Animated.timing(backdropOpacity, {
           toValue: 0,
-          duration: 200,
-          useNativeDriver: false,
-        }),
-        Animated.timing(slideY, {
-          toValue: 500,
-          duration: 200,
+          duration: 150,
           useNativeDriver: true,
         }),
-      ]).start();
+      ]).start(() => {
+        setIsMounted(false);
+      });
     }
-  }, [visible, backdropOpacity, slideY]);
+  }, [visible, isMounted, backdropOpacity, slideY, panY]);
 
   function reset() {
     setStep(1);
@@ -72,8 +135,22 @@ export default function AddTrackerModal({ visible, onClose, onCreate }: Props) {
   }
 
   function close() {
-    reset();
-    onClose();
+    Animated.parallel([
+      Animated.timing(slideY, {
+        toValue: 800,
+        duration: 180,
+        useNativeDriver: true,
+      }),
+      Animated.timing(backdropOpacity, {
+        toValue: 0,
+        duration: 150,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      panY.setValue(0);
+      reset();
+      onClose();
+    });
   }
 
   function handleNext() {
@@ -87,9 +164,15 @@ export default function AddTrackerModal({ visible, onClose, onCreate }: Props) {
   }
 
   return (
-    <Modal visible={visible} animationType="none" transparent onRequestClose={close}>
+    <Modal visible={visible || isMounted} transparent onRequestClose={close}>
       <Animated.View style={[styles.backdrop, { opacity: backdropOpacity }]}>
-        <Animated.View style={[styles.container, { transform: [{ translateY: slideY }] }]}>
+        <Animated.View
+        {...panResponder.panHandlers}
+        style={[
+          styles.container,
+          { transform: [{ translateY: Animated.add(slideY, panY) }] },
+        ]}
+      >
           {step === 1 && (
             <View>
               <Text style={styles.heading}>Select tracker type</Text>
@@ -191,33 +274,41 @@ const createStyles = (theme: Theme) =>
     },
     container: {
       backgroundColor: theme.colors.surface,
-      borderRadius: 12,
+      borderRadius: theme.radii.lg,
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
       padding: 12,
-      maxWidth: '80%',
       alignSelf: 'center',
       marginLeft: 'auto',
       marginRight: 'auto',
-      width: 340,
+      width: '95%',
+    },
+    handleWrapper: {
+      alignItems: 'center',
+      marginBottom: 8,
+    },
+    handle: {
+      width: 40,
+      height: 4,
+      borderRadius: 999,
+      backgroundColor: theme.colors.border,
     },
     heading: {
-      fontSize: 16,
+      fontSize: fontSizes.title,
       color: theme.colors.text,
-      marginBottom: 10,
+      padding: 8,
       fontWeight: '700',
     },
     grid: {
       flexDirection: 'row',
       flexWrap: 'wrap',
       justifyContent: 'space-around',
-      marginBottom: 10,
+      padding: 10
     },
     box: {
-      width: '40%',
+      width: '45%',
       aspectRatio: 1,
-      padding: 8,
-      borderRadius: 8,
+      borderRadius: theme.radii.lg,
       backgroundColor: theme.colors.background,
       borderWidth: 1,
       borderColor: theme.colors.border,
@@ -232,8 +323,8 @@ const createStyles = (theme: Theme) =>
     boxPressed: { opacity: 0.85 },
     boxTitle: {
       color: theme.colors.text,
-      fontSize: 12,
-      fontWeight: '700',
+      fontSize: fontSizes.title,
+      fontWeight: '400',
       marginBottom: 2,
     },
     boxTitleActive: {
@@ -241,7 +332,7 @@ const createStyles = (theme: Theme) =>
     },
     boxSubtitle: {
       color: theme.colors.muted,
-      fontSize: 9,
+      fontSize: fontSizes.body,
       textAlign: 'center',
     },
     boxSubtitleActive: {
