@@ -1,6 +1,7 @@
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useEffect, useRef } from 'react';
 import { Animated, Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
+import { fontSizes } from '../fonts';
 import { useTheme } from '../theme';
 
 const TAB_COUNT = 4;
@@ -120,6 +121,6 @@ const styles = StyleSheet.create({
   },
   label: {
     marginTop: 1,
-    fontSize: 11,
+    fontSize: fontSizes.captionSmall,
   },
 });

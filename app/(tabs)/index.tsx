@@ -46,8 +46,8 @@ export default function Index() {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Pressable onPress={openAddModal} style={{ paddingHorizontal: 12 }}>
-          <Feather name="plus" size={18} color={theme.colors.secondary} />
+        <Pressable onPress={openAddModal} style={{ paddingHorizontal: theme.spacing.screenEdge }}>
+          <Feather name="plus" size={30} color={theme.colors.secondary} />
         </Pressable>
       ),
     });
@@ -78,34 +78,15 @@ const createStyles = (theme: Theme) => StyleSheet.create({
   container: {
     backgroundColor: theme.colors.background,
     flex: 1,
-    padding: 10,
-  },
-  headerRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 18,
-  },
-  pageTitle: {
-    color: theme.colors.text,
-    fontSize: fontSizes.pageTitle,
-    fontWeight: "800",
-  },
-  addButton: {
-    width: 42,
-    height: 42,
-    borderRadius: 12,
-    backgroundColor: theme.colors.surface,
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: theme.colors.border,
+    padding: theme.spacing.screenEdge,
   },
   content: {
-    paddingLeft: 10,
+    paddingLeft: 0,
   },
   emptyText: {
     color: theme.colors.muted,
-    fontSize: fontSizes.subtitle,
+    paddingLeft: 8,
+    alignItems: "center",
+    fontSize: fontSizes.header,
   },
 });

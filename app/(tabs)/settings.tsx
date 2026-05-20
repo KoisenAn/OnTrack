@@ -23,10 +23,7 @@ const createStyles = (theme: Theme) =>
     container: {
       backgroundColor: theme.colors.background,
       flex: 1,
-      padding: 20,
-    },
-    headerRow: {
-      marginBottom: 18,
+      padding: theme.spacing.screenEdge,
     },
     center: {
       flex: 1,
@@ -34,7 +31,6 @@ const createStyles = (theme: Theme) =>
       alignItems: "center",
     },
     subtitle: {
-      marginTop: 12,
       color: theme.colors.secondary,
       fontSize: fontSizes.body,
     },

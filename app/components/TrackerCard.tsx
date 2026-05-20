@@ -37,7 +37,7 @@ const createStyles = (theme: Theme) =>
       borderRadius: 16,
       backgroundColor: theme.colors.surface,
       padding: 18,
-      marginBottom: 12,
+      marginBottom: theme.spacing.screenEdge,
       borderWidth: 1,
       borderColor: theme.colors.border,
     },
@@ -54,7 +54,7 @@ const createStyles = (theme: Theme) =>
     },
     subtitle: {
       color: theme.colors.muted,
-      fontSize: fontSizes.subtitle,
+      fontSize: fontSizes.header,
       lineHeight: 20,
     },
   });

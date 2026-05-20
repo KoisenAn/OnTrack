@@ -59,10 +59,12 @@ export const fontFiles = {
 } as const;
 
 export const fontSizes = {
-  pageTitle: 28,
+  pageTitle: 36,
   title: 22,
-  subtitle: 16,
+  header: 16,
   body: 14,
+  caption: 12,
+  captionSmall: 10,
 } as const;
 
 export type FontSizes = typeof fontSizes;
