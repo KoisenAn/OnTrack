@@ -10,8 +10,9 @@ import {
     TextInput,
     View,
 } from "react-native";
+import Icon from "../components/Icon";
 import { fontSizes } from "../fonts";
-import { Theme, useTheme } from "../theme";
+import { IconLibrary, Theme, useTheme } from "../theme";
 
 export type NewTracker = {
   type: string;
@@ -25,17 +26,37 @@ type Props = {
   onCreate: (data: NewTracker) => void;
 };
 
-const TRACKER_TYPES = ["Habit", "Counter", "Timer", "Numeric"];
+const TRACKER_TYPES = ["Habit", "Record", "Log"];
 
 const TRACKER_DESCRIPTIONS: Record<string, string> = {
-  Habit: "Track daily habits",
-  Counter: "Count occurrences",
-  Timer: "Time activities",
-  Numeric: "Log numbers",
+  Habit: "Track habits",
+  Record: "Record values",
+  Log: "Log entries",
+};
+
+const TRACKER_ICONS: Record<string, Record<IconLibrary, string>> = {
+  Habit: {
+    fontawesome: "check-circle",
+    fontawesome5: "check-circle",
+    fontawesome6: "check-circle",
+    feather: "check-circle",
+  },
+  Record: {
+    fontawesome: "clipboard",
+    fontawesome5: "clipboard",
+    fontawesome6: "clipboard",
+    feather: "clipboard",
+  },
+  Log: {
+    fontawesome: "file-alt",
+    fontawesome5: "file-alt",
+    fontawesome6: "file-alt",
+    feather: "file-text",
+  },
 };
 
 export default function AddTrackerModal({ visible, onClose, onCreate }: Props) {
-  const { theme } = useTheme();
+  const { theme, iconLibrary } = useTheme();
   const styles = createStyles(theme);
   const [step, setStep] = useState(1);
   const [type, setType] = useState<string | null>(null);
@@ -169,14 +190,15 @@ export default function AddTrackerModal({ visible, onClose, onCreate }: Props) {
 
   return (
     <Modal visible={visible || isMounted} transparent onRequestClose={close}>
-      <Animated.View {...panResponder.panHandlers} style={[styles.backdrop, { opacity: backdropOpacity }]}> 
+      <Animated.View style={[styles.backdrop, { opacity: backdropOpacity }]}> 
         <Animated.View
+          {...panResponder.panHandlers}
           style={[
             styles.container,
             { transform: [{ translateY: Animated.add(slideY, panY) }] },
           ]}
         >
-          <View {...panResponder.panHandlers} style={styles.handleWrapper}>
+          <View style={styles.handleWrapper}>
             <View style={styles.handle} />
           </View>
           {step === 1 && (
@@ -193,6 +215,12 @@ export default function AddTrackerModal({ visible, onClose, onCreate }: Props) {
                       pressed && styles.boxPressed,
                     ]}
                   >
+                    <Icon
+                      name={TRACKER_ICONS[t]?.[iconLibrary] ?? "circle"}
+                      size={28}
+                      color={type === t ? "#fff" : theme.colors.text}
+                      style={styles.boxIcon}
+                    />
                     <Text style={[styles.boxTitle, type === t && styles.boxTitleActive]}>{t}</Text>
                     <Text style={[styles.boxSubtitle, type === t && styles.boxSubtitleActive]}>
                       {TRACKER_DESCRIPTIONS[t]}
@@ -287,7 +315,6 @@ const createStyles = (theme: Theme) =>
       alignSelf: 'center',
       marginLeft: 'auto',
       marginRight: 'auto',
-      width: '95%',
     },
     handleWrapper: {
       alignItems: 'center',
@@ -320,7 +347,13 @@ const createStyles = (theme: Theme) =>
       borderColor: theme.colors.border,
       justifyContent: 'center',
       alignItems: 'center',
-      marginBottom: 8,
+      marginBottom: 12,
+      padding: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.12,
+      shadowRadius: 10,
+      elevation: 3,
     },
     boxActive: {
       backgroundColor: theme.colors.primary,
@@ -331,6 +364,7 @@ const createStyles = (theme: Theme) =>
       color: theme.colors.text,
       fontSize: fontSizes.title,
       fontWeight: '400',
+      marginTop: 8,
       marginBottom: 2,
     },
     boxTitleActive: {
@@ -340,6 +374,9 @@ const createStyles = (theme: Theme) =>
       color: theme.colors.muted,
       fontSize: fontSizes.body,
       textAlign: 'center',
+    },
+    boxIcon: {
+      marginBottom: 6,
     },
     boxSubtitleActive: {
       color: '#fff',
