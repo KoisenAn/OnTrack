@@ -1,8 +1,8 @@
-import Feather from "@expo/vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import { useLayoutEffect, useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import AddTrackerModal, { type NewTracker } from "../components/AddTrackerModal";
+import Icon from "../components/Icon";
 import TrackerCard, { type TrackerData } from "../components/TrackerCard";
 import { fontSizes } from "../fonts";
 import { Theme, useTheme } from "../theme";
@@ -47,7 +47,7 @@ export default function Index() {
     navigation.setOptions({
       headerRight: () => (
         <Pressable onPress={openAddModal} style={{ paddingHorizontal: theme.spacing.screenEdge }}>
-          <Feather name="plus" size={30} color={theme.colors.secondary} />
+          <Icon name="plus" size={30} color={theme.colors.secondary} />
         </Pressable>
       ),
     });

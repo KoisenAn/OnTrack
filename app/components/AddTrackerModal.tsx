@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {
+    Alert,
     Animated,
     Modal,
     PanResponder,
@@ -59,6 +60,9 @@ export default function AddTrackerModal({ visible, onClose, onCreate }: Props) {
         }
       },
       onPanResponderRelease: (_, gestureState) => {
+        if (gestureState.dy > 8) {
+          Alert.alert("Panned");
+        }
         const shouldClose = gestureState.dy > 100 || gestureState.vy > 0.8;
         if (shouldClose) {
           Animated.timing(slideY, {
@@ -165,14 +169,16 @@ export default function AddTrackerModal({ visible, onClose, onCreate }: Props) {
 
   return (
     <Modal visible={visible || isMounted} transparent onRequestClose={close}>
-      <Animated.View style={[styles.backdrop, { opacity: backdropOpacity }]}>
+      <Animated.View {...panResponder.panHandlers} style={[styles.backdrop, { opacity: backdropOpacity }]}> 
         <Animated.View
-        {...panResponder.panHandlers}
-        style={[
-          styles.container,
-          { transform: [{ translateY: Animated.add(slideY, panY) }] },
-        ]}
-      >
+          style={[
+            styles.container,
+            { transform: [{ translateY: Animated.add(slideY, panY) }] },
+          ]}
+        >
+          <View {...panResponder.panHandlers} style={styles.handleWrapper}>
+            <View style={styles.handle} />
+          </View>
           {step === 1 && (
             <View>
               <Text style={styles.heading}>Select tracker type</Text>

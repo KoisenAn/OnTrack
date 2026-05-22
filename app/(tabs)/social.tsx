@@ -1,4 +1,3 @@
-import Feather from '@expo/vector-icons/Feather';
 import { StyleSheet, Text, View } from 'react-native';
 import { fontSizes } from '../fonts';
 import { Theme, useTheme } from "../theme";
@@ -10,7 +9,6 @@ export default function Social() {
   return (
     <View style={styles.container}>
       <View style={styles.center}>
-        <Feather name="users" size={54} color={theme.colors.secondary} />
         <Text style={styles.subtitle}>Social screen.</Text>
       </View>
     </View>

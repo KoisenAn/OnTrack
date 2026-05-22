@@ -1,6 +1,6 @@
-import Feather from '@expo/vector-icons/Feather';
 import { Tabs } from "expo-router";
 import AnimatedTabBar from "../components/AnimatedTabBar";
+import Icon from '../components/Icon';
 import { fontSizes } from '../fonts';
 import { useTheme } from "../theme";
 
@@ -25,7 +25,7 @@ export default function TabsLayout() {
         options={{
           headerTitle: "Dashboard",
           tabBarIcon: ({ focused, color }) => (
-            <Feather name="list" size={iconSize} color={color} />
+            <Icon name="dashboard" size={iconSize} color={color} />
           ),
         }}
       />
@@ -34,7 +34,7 @@ export default function TabsLayout() {
         options={{
           headerTitle: "Analytics",
           tabBarIcon: ({ focused, color }) => (
-            <Feather name="pie-chart" size={iconSize} color={color} />
+            <Icon name="stats" size={iconSize} color={color} />
           ),
         }}
       />
@@ -43,7 +43,7 @@ export default function TabsLayout() {
         options={{
           headerTitle: "Social",
           tabBarIcon: ({ focused, color }) => (
-            <Feather name="users" size={iconSize} color={color} />
+            <Icon name="social" size={iconSize} color={color} />
           ),
         }}
       />
@@ -52,7 +52,7 @@ export default function TabsLayout() {
         options={{
           headerTitle: "Settings",
           tabBarIcon: ({ focused, color }) => (
-            <Feather name="settings" size={iconSize} color={color} />
+            <Icon name="settings" size={iconSize} color={color} />
           ),
         }}
       />

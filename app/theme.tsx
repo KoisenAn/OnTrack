@@ -73,25 +73,43 @@ export const minimalDark = {
 
 export type Theme = typeof dark;
 
+export type IconLibrary = 'fontawesome' | 'fontawesome5' | 'fontawesome6' | 'feather';
+
+export const AVAILABLE_ICON_LIBRARIES: IconLibrary[] = [
+  'fontawesome',
+  'fontawesome5',
+  'fontawesome6',
+  'feather',
+];
+
 type ThemeContextValue = {
   theme: Theme;
   setTheme: (theme: Theme) => void;
+  iconLibrary: IconLibrary;
+  setIconLibrary: (lib: IconLibrary) => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue>({
   theme: dark,
   setTheme: () => {},
+  iconLibrary: 'fontawesome6',
+  setIconLibrary: () => {},
 });
 
 export function ThemeProvider({ children }: PropsWithChildren) {
   const fontsLoaded = useAppFonts();
   const [theme, setTheme] = useState<Theme>(minimalLight);
+  const [iconLibrary, setIconLibrary] = useState<IconLibrary>('fontawesome6');
 
   if (!fontsLoaded) {
     return null;
   }
 
-  return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme, iconLibrary, setIconLibrary }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }
 
 export const useTheme = () => {
