@@ -15,8 +15,8 @@ export default function TabsLayout() {
         tabBarActiveTintColor: theme.colors.primary,
         headerStyle: { height: 100, backgroundColor: theme.colors.background},
         headerShadowVisible: false,
-        headerTitleStyle: { color: theme.colors.text, fontSize: fontSizes.pageTitle, fontWeight: "800", paddingLeft: 0 },
-        headerTitleAlign: "left",
+        headerTitleStyle: { color: theme.colors.text, fontSize: fontSizes.title, fontWeight: "700", paddingLeft: 0 },
+        headerTitleAlign: "center",
         headerTintColor: theme.colors.primary,
       }}
     >

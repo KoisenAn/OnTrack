@@ -1,4 +1,3 @@
-import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useEffect, useRef } from 'react';
 import { Animated, Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import { fontSizes } from '../fonts';
@@ -7,7 +6,8 @@ import { useTheme } from '../theme';
 const TAB_COUNT = 4;
 const BAR_PADDING = 4;
 
-export default function AnimatedTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+export default function AnimatedTabBar(props: any) {
+  const { state, descriptors, navigation } = props;
   const { theme } = useTheme();
   const slideAnim = useRef(new Animated.Value(0)).current;
   const tabWidth = (Dimensions.get('window').width - 48 - BAR_PADDING * 2) / TAB_COUNT;

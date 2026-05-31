@@ -1,17 +1,16 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import React from 'react';
 import { useTheme } from '../theme';
 // FontAwesome6 may not be available in some setups; import if present
 import Feather from '@expo/vector-icons/Feather';
 import * as FA6 from '@expo/vector-icons/FontAwesome6';
 
-import type { StyleProp, TextStyle } from 'react-native';
+import type { ColorValue, StyleProp, TextStyle } from 'react-native';
 
 type Props = {
   name: string;
   size?: number;
-  color?: string;
+  color?: ColorValue;
   style?: StyleProp<TextStyle>;
 };
 

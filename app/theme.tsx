@@ -26,11 +26,11 @@ export const light = {
 export const minimalLight = {
   colors: {
     background: "#ffffff",
-    surface: "#f8fafc",
+    surface: "#fafafa",
     primary: "#000000",
     secondary: "#b3b3b3",
-    muted: "#6B7280",
-    border: "#E5E7EB",
+    muted: "#707070",
+    border: "#e9e9e9",
     slider: "#EEEEEE",
     text: "#000000",
     tabBarBackground: "#ffffff",
