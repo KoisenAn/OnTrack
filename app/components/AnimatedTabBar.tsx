@@ -121,6 +121,6 @@ const styles = StyleSheet.create({
   },
   label: {
     marginTop: 1,
-    fontSize: fontSizes.captionSmall,
+    fontSize: fontSizes.iconCaption,
   },
 });

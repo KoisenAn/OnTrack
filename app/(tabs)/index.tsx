@@ -87,6 +87,6 @@ const createStyles = (theme: Theme) => StyleSheet.create({
     color: theme.colors.muted,
     paddingLeft: 8,
     alignItems: "center",
-    fontSize: fontSizes.header,
+    fontSize: fontSizes.header1,
   },
 });
