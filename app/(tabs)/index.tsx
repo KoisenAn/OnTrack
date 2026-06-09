@@ -53,9 +53,7 @@ export default function Index() {
       />
       <ScrollView contentContainerStyle={styles.content}>
         {trackers.length === 0 ? (
-          <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>No trackers yet.</Text>
-          </View>
         ) : (
           trackers.map((tracker) => (
             <TrackerCard key={tracker.id} tracker={tracker} />
@@ -80,12 +78,9 @@ const createStyles = (theme: Theme) => StyleSheet.create({
   },
   content: {
     flexGrow: 1,
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-  },  
+    gap: 20,
+  },
   emptyText: {
     color: theme.colors.muted,
     paddingLeft: 8,

@@ -59,7 +59,7 @@ export const fontFiles = {
 } as const;
 
 export const fontSizes = {
-  title: 26,
+  title: 24,
   subtitle: 15,
   header1: 20,
   header2: 18,
