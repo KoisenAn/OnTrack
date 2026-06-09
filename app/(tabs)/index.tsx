@@ -1,5 +1,4 @@
-import { useNavigation } from "expo-router";
-import { useLayoutEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import AddTrackerModal, { type NewTracker } from "../components/AddTrackerModal";
 import Icon from "../components/Icon";
@@ -12,7 +11,6 @@ export default function Index() {
   const styles = createStyles(theme);
   const [trackers, setTrackers] = useState<TrackerData[]>([]);
   const [adding, setAdding] = useState(false);
-  const navigation: any = useNavigation();
 
   const nextTrackerTitle = useMemo(
     () => `Tracker ${trackers.length + 1}`,
@@ -43,16 +41,6 @@ export default function Index() {
     ]);
   };
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <Pressable onPress={openAddModal} style={{ paddingHorizontal: theme.spacing.screenEdge }}>
-          <Icon name="plus" size={30} color={theme.colors.secondary} />
-        </Pressable>
-      ),
-    });
-  }, [navigation, openAddModal, theme.colors.secondary]);
-
   return (
     <View style={styles.container}>
       <AddTrackerModal
@@ -65,10 +53,20 @@ export default function Index() {
       />
       <ScrollView contentContainerStyle={styles.content}>
         {trackers.length === 0 ? (
-          <Text style={styles.emptyText}>Tap + to add a tracker.</Text>
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No trackers yet.</Text>
+          </View>
         ) : (
-          trackers.map((tracker) => <TrackerCard key={tracker.id} tracker={tracker} />)
+          trackers.map((tracker) => (
+            <TrackerCard key={tracker.id} tracker={tracker} />
+          ))
         )}
+        <View style={{ alignItems: "center" }}>
+          <Pressable onPress={openAddModal} style={styles.addButton}>
+            <Icon name="plus" size={24} color="#fff" />
+            <Text style={styles.addButtonText}>Create New Tracker</Text>
+          </Pressable>
+        </View>
       </ScrollView>
     </View>
   );
@@ -81,12 +79,33 @@ const createStyles = (theme: Theme) => StyleSheet.create({
     padding: theme.spacing.screenEdge,
   },
   content: {
-    paddingLeft: 0,
+    flexGrow: 1,
   },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },  
   emptyText: {
     color: theme.colors.muted,
     paddingLeft: 8,
     alignItems: "center",
     fontSize: fontSizes.header1,
   },
+  addButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#000",
+    borderRadius: 999,
+    paddingVertical: 10,
+    width: 175,
+    gap: 8,
+  },
+  addButtonText: {
+    color: "#fff",
+    fontSize: fontSizes.body,
+    fontWeight: "600",
+    alignSelf: "center",
+  },  
 });
