@@ -39,15 +39,6 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="social"
-        options={{
-          headerTitle: "Social",
-          tabBarIcon: ({ focused, color }) => (
-            <Icon name="social" size={iconSize} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="settings"
         options={{
           headerTitle: "Settings",
