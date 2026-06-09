@@ -79,7 +79,6 @@ const createStyles = (theme: Theme) => StyleSheet.create({
   content: {
     flexGrow: 1,
     alignItems: "center",
-    gap: 20,
   },
   emptyText: {
     color: theme.colors.muted,
@@ -96,6 +95,7 @@ const createStyles = (theme: Theme) => StyleSheet.create({
     paddingVertical: 10,
     width: 175,
     gap: 8,
+    marginTop: 20,
   },
   addButtonText: {
     color: "#fff",

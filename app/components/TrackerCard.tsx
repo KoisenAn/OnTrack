@@ -34,12 +34,13 @@ export default function TrackerCard({ tracker, onPress, style }: TrackerCardProp
 const createStyles = (theme: Theme) =>
   StyleSheet.create({
     card: {
-      borderRadius: 16,
+      borderRadius: 20,
       backgroundColor: theme.colors.surface,
       padding: 18,
       marginBottom: theme.spacing.screenEdge,
-      borderWidth: 1,
+      /*borderWidth: 1,*/
       borderColor: theme.colors.border,
+      width: 400,
     },
     pressed: {
       opacity: 0.85,
@@ -49,12 +50,12 @@ const createStyles = (theme: Theme) =>
     },
     title: {
       color: theme.colors.text,
-      fontSize: fontSizes.title,
+      fontSize: fontSizes.header2,
       fontWeight: "700",
     },
     subtitle: {
       color: theme.colors.muted,
-      fontSize: fontSizes.header,
+      fontSize: fontSizes.header3,
       lineHeight: 20,
     },
   });
