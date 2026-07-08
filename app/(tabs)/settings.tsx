@@ -8,8 +8,12 @@ export default function Settings() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.center}>
-        <Text style={styles.subtitle}>Settings screen.</Text>
+      <View style={styles.panel}>
+        <Text style={styles.eyebrow}>Preferences</Text>
+        <Text style={styles.title}>Settings will stay simple.</Text>
+        <Text style={styles.subtitle}>
+          Theme and tracker preferences can live here without cluttering the dashboard.
+        </Text>
       </View>
     </View>
   );
@@ -22,13 +26,31 @@ const createStyles = (theme: Theme) =>
       flex: 1,
       padding: theme.spacing.screenEdge,
     },
-    center: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
+    panel: {
+      width: "100%",
+      maxWidth: 520,
+      alignSelf: "center",
+      backgroundColor: theme.colors.surface,
+      borderRadius: theme.radii.md,
+      padding: 24,
+      marginTop: 18,
     },
-    subtitle: {
+    eyebrow: {
       color: theme.colors.secondary,
       fontSize: fontSizes.body,
+      fontWeight: "700",
+      marginBottom: 8,
+      textTransform: "uppercase",
+    },
+    title: {
+      color: theme.colors.text,
+      fontSize: fontSizes.header1,
+      fontWeight: "600",
+      marginBottom: 8,
+    },
+    subtitle: {
+      color: theme.colors.muted,
+      fontSize: fontSizes.header4,
+      lineHeight: 20,
     },
   });

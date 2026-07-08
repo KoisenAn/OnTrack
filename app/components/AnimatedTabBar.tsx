@@ -1,36 +1,35 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Animated, Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
 import { fontSizes } from '../fonts';
 import { useTheme } from '../theme';
 
-const TAB_COUNT = 4;
 const BAR_PADDING = 4;
 
 export default function AnimatedTabBar(props: any) {
   const { state, descriptors, navigation } = props;
   const { theme } = useTheme();
-  const slideAnim = useRef(new Animated.Value(0)).current;
-  const tabWidth = (Dimensions.get('window').width - 48 - BAR_PADDING * 2) / TAB_COUNT;
+  const [slideAnim] = useState(() => new Animated.Value(0));
+  const visibleRoutes = useMemo(() => state.routes.filter(
+    (_: any, i: number) => descriptors[state.routes[i].key]?.options?.tabBarIcon
+  ), [descriptors, state.routes]);
+  const tabWidth = (Dimensions.get('window').width - 48 - BAR_PADDING * 2) / visibleRoutes.length;
+  const focusedVisibleIndex = visibleRoutes.findIndex((route: any) => route.key === state.routes[state.index]?.key);
 
   useEffect(() => {
     Animated.spring(slideAnim, {
-      toValue: state.index * tabWidth,
+      toValue: Math.max(focusedVisibleIndex, 0) * tabWidth,
       useNativeDriver: true,
-      tension: 60,
-      friction: 10,
+      tension: 70,
+      friction: 12,
     }).start();
-  }, [state.index, tabWidth]);
-
-  const visibleRoutes = state.routes.filter(
-    (_: any, i: number) => descriptors[state.routes[i].key]?.options?.tabBarIcon
-  );
+  }, [focusedVisibleIndex, slideAnim, tabWidth]);
 
   return (
     <View style={styles.outerContainer}>
       <View
         style={[
           styles.tabBar,
-          { backgroundColor: theme.colors.tabBarBackground, borderColor: theme.colors.border },
+          { backgroundColor: theme.colors.tabBarBackground },
         ]}
       >
         <Animated.View
@@ -89,16 +88,15 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: 'row',
-    borderRadius: 30,
+    borderRadius: 28,
     paddingHorizontal: BAR_PADDING,
     paddingVertical: BAR_PADDING,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-    borderWidth: 1,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.06,
+    shadowRadius: 20,
+    elevation: 3,
     position: 'relative',
     overflow: 'hidden',
   },
@@ -107,12 +105,12 @@ const styles = StyleSheet.create({
     top: BAR_PADDING,
     bottom: BAR_PADDING,
     left: BAR_PADDING,
-    borderRadius: 30,
+    borderRadius: 24,
   },
   tab: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 6,
+    paddingVertical: 8,
     zIndex: 1,
   },
   iconWrap: {
@@ -120,7 +118,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
-    marginTop: 1,
+    marginTop: 2,
     fontSize: fontSizes.iconCaption,
+    fontWeight: '600',
   },
 });

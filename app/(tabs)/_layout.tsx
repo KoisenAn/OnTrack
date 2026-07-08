@@ -13,9 +13,14 @@ export default function TabsLayout() {
       tabBar={(props) => <AnimatedTabBar {...props} />}
       screenOptions={{
         tabBarActiveTintColor: theme.colors.primary,
-        headerStyle: { backgroundColor: theme.colors.background},
+        headerStyle: { backgroundColor: theme.colors.background },
         headerShadowVisible: false,
-        headerTitleStyle: { color: theme.colors.text, fontSize: fontSizes.header1, fontWeight: "700", paddingLeft: 0 },
+        headerTitleStyle: {
+          color: theme.colors.text,
+          fontSize: fontSizes.header2,
+          fontWeight: "600",
+          paddingLeft: 0,
+        },
         headerTitleAlign: "center",
         headerTintColor: theme.colors.primary,
       }}
@@ -24,7 +29,7 @@ export default function TabsLayout() {
         name="index"
         options={{
           headerTitle: "Dashboard",
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ color }) => (
             <Icon name="dashboard" size={iconSize} color={color} />
           ),
         }}
@@ -33,7 +38,7 @@ export default function TabsLayout() {
         name="stats"
         options={{
           headerTitle: "Analytics",
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ color }) => (
             <Icon name="stats" size={iconSize} color={color} />
           ),
         }}
@@ -42,12 +47,11 @@ export default function TabsLayout() {
         name="settings"
         options={{
           headerTitle: "Settings",
-          tabBarIcon: ({ focused, color }) => (
+          tabBarIcon: ({ color }) => (
             <Icon name="settings" size={iconSize} color={color} />
           ),
         }}
       />
-      <Tabs.Screen name="not_found" options={{ headerShown: false }} />
     </Tabs>
   );
 }
